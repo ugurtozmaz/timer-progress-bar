@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer Progress Bar - Bootstrap</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+</head>
+<body>
+    <div class="d-flex flex-column alig-items-center justify-content-center min-vh-100 p-5">
+
+        <h2 class="text-center"> Timer Bootstrap Progress Bar </h2>
+
+        <div class="row my-5">
+            <div class="col-12 col-md-6 col-lg-2 offset-md-3 offset-lg-5">
+                <div class="row">
+                    <label for="second-select" class="col-sm-4 col-form-label text-end"> Second </label>
+                    <div class="col-sm-8">
+                        <select id="second-select" class="form-select" onchange="runTimer()">
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="25">25</option>
+                        </select>
+                    </div>
+                  </div>
+            </div>
+        </div>
+
+        <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+
+    </div>
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <script>
+        function runTimer() {
+            const selectTime = document.getElementById("second-select")
+            console.log(selectTime.value)
+
+            const bar = document.querySelector(".progress .progress-bar");            
+            let startTime = new Date().getTime();
+            let endTime = new Date();
+            // endTime.setSeconds(endTime.getSeconds() + 2);
+            endTime.setSeconds(endTime.getSeconds() + parseInt(selectTime.value));
+
+            let max = endTime - startTime;
+
+            const interval = setInterval(() => {
+                let currentTime = new Date().getTime();
+                let calc = currentTime - startTime;
+                if (calc >= max) clearTimeout(interval);
+
+                percent = (calc / max) * 100;
+                bar.style.width = percent + "%";
+            }, 50);
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            runTimer()
+        });
+    </script>
+</body>
+</html>
